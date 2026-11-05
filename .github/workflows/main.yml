@@ -1,0 +1,39 @@
+name: Delete FeatureServer Records
+
+on:
+  workflow_dispatch:
+    inputs:
+      delete_all:
+        description: "Delete ALL records? (true/false)"
+        required: true
+        default: "false"
+      delete_where:
+        description: "WHERE clause (optional, used only if delete_all=false)"
+        required: false
+        default: ""
+      confirm_phrase:
+        description: "Type DELETE to confirm this destructive action"
+        required: true
+
+jobs:
+  delete:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: pip install requests
+
+      - name: Run delete script
+        env:
+          ARCGIS_TOKEN: ${{ secrets.ARCGIS_TOKEN }}
+          DELETE_ALL: ${{ github.event.inputs.delete_all }}
+          DELETE_WHERE: ${{ github.event.inputs.delete_where }}
+          CONFIRM_PHRASE: ${{ github.event.inputs.confirm_phrase }}
+        run: python delete_script.py
