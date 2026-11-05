@@ -25,7 +25,7 @@ def get_session():
 
 LAYER_URL = os.environ.get(
     "LAYER_URL",
-    "https://amangis.in/gisserver/rest/services/WUA/solar_scheme_dashboard_service_new/FeatureServer/0",
+    "https://nhpgw.wb.gov.in/gisserver/rest/services/WBProjects/gwdashboardservice/FeatureServer/0",
 )
 
 # Object IDs of the records you want to delete, e.g. [1, 2, 5]
